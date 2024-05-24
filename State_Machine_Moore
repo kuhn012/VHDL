@@ -1,0 +1,78 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity Controller is
+  Port (clk, reset : in  STD_LOGIC;
+        count_clk : in STD_LOGIC_VECTOR (25 downto 0);
+        reg_en : out STD_LOGIC;
+        count_clr : out STD_LOGIC);
+end Controller;
+
+architecture Behavioral of Controller is
+  
+type state_type is (S0, S1, S2); 
+signal state, next_state : state_type; 
+ 
+begin 
+ 
+SYNC_PROC : process (clk) 
+begin 
+    if rising_edge(clk) then 
+        if (reset = '1') then 
+            state <= S0; 
+        else 
+            state <= next_state; 
+        end if;
+    end if; 
+end process; 
+ 
+OUTPUT_DECODE : process (state) 
+begin 
+    case (state) is 
+        when S0 => 
+            reg_en <= '0';
+            count_clr <= '0';
+        when S1 => 
+            reg_en <= '1';
+            count_clr <= '0'; 
+        when S2 =>
+            reg_en <= '0';
+            count_clr <= '1';  
+        when others => 
+            reg_en <= '0';
+            count_clr <= '0';  
+    end case; 
+end process; 
+ 
+NEXT_STATE_DECODE : process (state, count_clk) 
+begin 
+    next_state <= S0; 
+case (state) is 
+    when S0 => 
+        if (count_clk = "00010111110101111000010000") then 
+            next_state <= S1;
+        end if;
+    when S1 => 
+        if (count_clk = "00010111110101111000010001") then 
+            next_state <= S2; 
+        end if;
+    when S2 => 
+        if (count_clk > "00010111110101111000010001") then 
+            next_state <= S0;
+        end if;     
+    when others => 
+        next_state <= S0; 
+end case; 
+end process; 
+
+
+end Behavioral;
