@@ -1,0 +1,78 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+USE ieee.numeric_std.ALL;
+
+entity RAM is
+port(
+ RAM_ADDR_W_1, RAM_ADDR_W_2, RAM_ADDR_W_3, RAM_ADDR_W_4: in std_logic_vector(4 downto 0);
+ RAM_ADDR_W_5, RAM_ADDR_W_6, RAM_ADDR_W_7, RAM_ADDR_W_8: in std_logic_vector(4 downto 0);
+ RAM_ADDR_W_9, RAM_ADDR_W_10, RAM_ADDR_W_11,RAM_ADDR_W_12: in std_logic_vector(4 downto 0);
+ RAM_ADDR_W_13, RAM_ADDR_W_14, RAM_ADDR_W_15, RAM_ADDR_W_16: in std_logic_vector(4 downto 0);
+ RAM_ADDR_W_17, RAM_ADDR_W_18, RAM_ADDR_W_19, RAM_ADDR_W_20 : in std_logic_vector(4 downto 0);
+ RAM_ADDR_W_21, RAM_ADDR_W_22, RAM_ADDR_W_23, RAM_ADDR_W_24 : in std_logic_vector(4 downto 0);
+ RAM_ADDR_W_25 : in std_logic_vector(4 downto 0);
+ 
+ RAM_DATA_IN_1, RAM_DATA_IN_2, RAM_DATA_IN_3, RAM_DATA_IN_4: in std_logic_vector(19 downto 0);
+ RAM_DATA_IN_5, RAM_DATA_IN_6, RAM_DATA_IN_7, RAM_DATA_IN_8: in std_logic_vector(19 downto 0);
+ RAM_DATA_IN_9, RAM_DATA_IN_10, RAM_DATA_IN_11, RAM_DATA_IN_12: in std_logic_vector(19 downto 0);
+ RAM_DATA_IN_13, RAM_DATA_IN_14, RAM_DATA_IN_15, RAM_DATA_IN_16: in std_logic_vector(19 downto 0);
+ RAM_DATA_IN_17, RAM_DATA_IN_18, RAM_DATA_IN_19, RAM_DATA_IN_20 : in std_logic_vector(19 downto 0);
+ RAM_DATA_IN_21, RAM_DATA_IN_22, RAM_DATA_IN_23, RAM_DATA_IN_24 : in std_logic_vector(19 downto 0);
+ RAM_DATA_IN_25 : in std_logic_vector(19 downto 0);
+ 
+ RAM_ADDR_R: in std_logic_vector(4 downto 0); -- Address to read RAM
+ RAM_WR: in std_logic; -- Write enable 
+ RAM_CLOCK: in std_logic; -- clock input for RAM
+ RAM_DATA_OUT: out std_logic_vector(19 downto 0) -- Data output of RAM
+);
+end RAM;
+
+architecture Behavioral of RAM is 
+type RAM_ARRAY is array (0 to 24 ) of std_logic_vector (19 downto 0);
+-- initial values in the RAM
+signal RAM: RAM_ARRAY :=(
+    "00000000000000000000", "00000000000000000000", "00000000000000000000", "00000000000000000000", "00000000000000000000",
+    "00000000000000000000", "00000000000000000000", "00000000000000000000", "00000000000000000000", "00000000000000000000",
+    "00000000000000000000", "00000000000000000000", "00000000000000000000", "00000000000000000000", "00000000000000000000",
+    "00000000000000000000", "00000000000000000000", "00000000000000000000", "00000000000000000000", "00000000000000000000",
+    "00000000000000000000", "00000000000000000000", "00000000000000000000", "00000000000000000000", "00000000000000000000"
+    ); 
+begin
+process(RAM_CLOCK)
+begin
+ if(rising_edge(RAM_CLOCK)) then
+    if(RAM_WR='1') then -- when write enable = 1, 
+    -- write input data into RAM at the provided address
+        RAM(to_integer(unsigned(RAM_ADDR_W_1))) <= RAM_DATA_IN_1;
+        RAM(to_integer(unsigned(RAM_ADDR_W_2))) <= RAM_DATA_IN_2;
+        RAM(to_integer(unsigned(RAM_ADDR_W_3))) <= RAM_DATA_IN_3;
+        RAM(to_integer(unsigned(RAM_ADDR_W_4))) <= RAM_DATA_IN_4;
+        RAM(to_integer(unsigned(RAM_ADDR_W_5))) <= RAM_DATA_IN_5;
+        RAM(to_integer(unsigned(RAM_ADDR_W_6))) <= RAM_DATA_IN_6;
+        RAM(to_integer(unsigned(RAM_ADDR_W_7))) <= RAM_DATA_IN_7;
+        RAM(to_integer(unsigned(RAM_ADDR_W_8))) <= RAM_DATA_IN_8;
+        RAM(to_integer(unsigned(RAM_ADDR_W_9))) <= RAM_DATA_IN_9;
+        RAM(to_integer(unsigned(RAM_ADDR_W_10))) <= RAM_DATA_IN_10;
+        RAM(to_integer(unsigned(RAM_ADDR_W_11))) <= RAM_DATA_IN_11;
+        RAM(to_integer(unsigned(RAM_ADDR_W_12))) <= RAM_DATA_IN_12;
+        RAM(to_integer(unsigned(RAM_ADDR_W_13))) <= RAM_DATA_IN_13;
+        RAM(to_integer(unsigned(RAM_ADDR_W_14))) <= RAM_DATA_IN_14;
+        RAM(to_integer(unsigned(RAM_ADDR_W_15))) <= RAM_DATA_IN_15;
+        RAM(to_integer(unsigned(RAM_ADDR_W_16))) <= RAM_DATA_IN_16;
+        RAM(to_integer(unsigned(RAM_ADDR_W_17))) <= RAM_DATA_IN_17;
+        RAM(to_integer(unsigned(RAM_ADDR_W_18))) <= RAM_DATA_IN_18;
+        RAM(to_integer(unsigned(RAM_ADDR_W_19))) <= RAM_DATA_IN_19;
+        RAM(to_integer(unsigned(RAM_ADDR_W_20))) <= RAM_DATA_IN_20;
+        RAM(to_integer(unsigned(RAM_ADDR_W_21))) <= RAM_DATA_IN_21;
+        RAM(to_integer(unsigned(RAM_ADDR_W_22))) <= RAM_DATA_IN_22;
+        RAM(to_integer(unsigned(RAM_ADDR_W_23))) <= RAM_DATA_IN_23;
+        RAM(to_integer(unsigned(RAM_ADDR_W_24))) <= RAM_DATA_IN_24;
+        RAM(to_integer(unsigned(RAM_ADDR_W_25))) <= RAM_DATA_IN_25;
+    -- The index of the RAM array type needs to be integer so
+    -- converts RAM_ADDR from std_logic_vector -> Unsigned -> Interger using numeric_std library
+    end if;
+     -- Data to be read out 
+    RAM_DATA_OUT <= RAM(to_integer(unsigned(RAM_ADDR_R)));
+ end if;
+end process; 
+end Behavioral;
