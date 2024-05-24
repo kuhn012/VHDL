@@ -1,0 +1,40 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.std_logic_unsigned.ALL;
+use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity Clk_count is
+  Port (clk, count_clr, count_en : in STD_LOGIC;
+        clk_count_out : out STD_LOGIC_VECTOR (25 downto 0));
+end Clk_count;
+
+architecture Behavioral of Clk_count is
+
+Signal count_up : STD_LOGIC_VECTOR (25 downto 0) := (others => '0');
+
+begin
+
+Process (clk) begin
+    if rising_edge(clk) then
+        if (count_clr = '1') then
+            count_up <= (others => '0');
+        elsif (count_clr = '0') then
+            if (count_en = '1') then
+                count_up <= count_up + 1;
+            end if;
+        end if;
+    end if;
+end Process;
+
+clk_count_out <= count_up;
+
+end Behavioral;
