@@ -8,15 +8,12 @@ entity Ham is
         a : in std_logic_vector(1023 downto 0);
         b : in std_logic_vector(1023 downto 0);
         clk : in std_logic:= '0';
-       -- result : out std_logic_vector (1023 downto 0):= (others => '0');
         distance : out std_logic_vector(1023 downto 0) := (others => '0')
     );
 end Ham;
 
 architecture behavioral of Ham is
---signal count : std_logic_vector(1023 downto 0):= (others=> '0');
---signal temp : std_logic_vector (1023 downto 0):= (others => '0');
---signal a_int, b_int: std_logic_vector (1023 downto 0):= (others => '0');
+
 begin
 
   
