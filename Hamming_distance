@@ -1,0 +1,40 @@
+library IEEE;
+use IEEE.std_logic_1164.all;
+use IEEE.std_logic_unsigned.all;
+use IEEE.numeric_std.all;
+
+entity Ham is
+    port (
+        a : in std_logic_vector(1023 downto 0);
+        b : in std_logic_vector(1023 downto 0);
+        clk : in std_logic:= '0';
+       -- result : out std_logic_vector (1023 downto 0):= (others => '0');
+        distance : out std_logic_vector(1023 downto 0) := (others => '0')
+    );
+end Ham;
+
+architecture behavioral of Ham is
+--signal count : std_logic_vector(1023 downto 0):= (others=> '0');
+--signal temp : std_logic_vector (1023 downto 0):= (others => '0');
+--signal a_int, b_int: std_logic_vector (1023 downto 0):= (others => '0');
+begin
+
+  
+    process(clk)
+           variable count : integer range 0 to 1023 := 0;
+           variable temp: std_logic_vector (1023 downto 0) := (others=>'0'); 
+    begin
+    if rising_edge(clk)then
+        temp := a xor b; -- XOR operation to find differing bits
+        count := 0;--reset count to zero
+       
+        for i in 0 to 1023 loop
+                if(temp(i) = '1')then
+                count := count + 1;
+            end if;
+        end loop;
+        
+        distance <= std_logic_vector (to_unsigned (count, distance'length)) ; -- output distance value
+        end if;
+    end process;
+end behavioral;
