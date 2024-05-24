@@ -1,0 +1,71 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+use IEEE.NUMERIC_STD.ALL;
+use IEEE.std_logic_unsigned.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity Comparator is
+  Port (A, B, C, D, E, F, G, H, I, J, K, L, M : in STD_LOGIC_VECTOR (1023 downto 0);--Inputs are outputs from Hamming Distance Calculator
+        N, O, P, Q, R, S, T, U, V, W, X, Y, Z : in STD_LOGIC_VECTOR (1023 downto 0);
+        A_out, B_out, C_out, D_out, E_out, F_out, G_out, H_out, I_out, J_out, K_out, L_out, M_out : out STD_LOGIC;--Single bit outputs to determine most similar class vector
+        N_out, O_out, P_out, Q_out, R_out, S_out, T_out, U_out, V_out, W_out, X_out, Y_out, Z_out : out STD_LOGIC);        
+end Comparator;
+
+architecture Behavioral of Comparator is
+
+Procedure Assign_Comparator_Value (--Determines if input is less than every other input, Outputs 1 bit to determine class vector
+Signal A_int, B_int, C_int, D_int, E_int, F_int, G_int, H_int, I_int, J_int, K_int, L_int, M_int : in STD_LOGIC_VECTOR (1023 downto 0);
+Signal N_int, O_int, P_int, Q_int, R_int, S_int, T_int, U_int, V_int, W_int, X_int, Y_int, Z_int : in STD_LOGIC_VECTOR (1023 downto 0);
+Signal Aout : out STD_LOGIC) is
+
+    begin
+        if ((A_int <= B_int) AND (A_int <= C_int) AND (A_int <= D_int) AND (A_int <= E_int) AND (A_int <= F_int) AND (A_int <= G_int) AND (A_int <= H_int) AND (A_int <= I_int) AND (A_int <= J_int) AND (A_int <= K_int) AND (A_int <= L_int) AND (A_int <= M_int) AND (A_int <= N_int) AND (A_int <= O_int) AND (A_int <= P_int) AND (A_int <= Q_int) AND (A_int <= R_int) AND (A_int <= S_int) AND (A_int <= T_int) AND (A_int <= U_int) AND (A_int <= V_int) AND (A_int <= W_int) AND (A_int <= X_int) AND (A_int <= Y_int) AND (A_int <= Z_int)) then
+                Aout <= '1';
+        else
+            Aout <= '0';
+            end if;
+
+    
+end Procedure;
+
+Signal reg_A, reg_B, reg_C, reg_D, reg_E, reg_F, reg_G, reg_H, reg_I, reg_J, reg_K, reg_L, reg_M : STD_LOGIC := '0';
+Signal reg_N, reg_O, reg_P, reg_Q, reg_R, reg_S, reg_T, reg_U, reg_V, reg_W, reg_X, reg_Y, reg_Z : STD_LOGIC := '0';
+
+begin
+
+Process (A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z) begin    
+    Assign_Comparator_Value(A_int => A, B_int => B, C_int => C, D_int => D, E_int => E, F_int => F, G_int => G, H_int => H, I_int => I, J_int => J, K_int => K, L_int => L, M_int => M, N_int => N, O_int => O, P_int => P, Q_int => Q, R_int => R, S_int => S, T_int => T, U_int => U, V_int => V, W_int => W, X_int => X, Y_int => Y, Z_int => Z, Aout => A_out);
+    Assign_Comparator_Value(A_int => B, B_int => A, C_int => C, D_int => D, E_int => E, F_int => F, G_int => G, H_int => H, I_int => I, J_int => J, K_int => K, L_int => L, M_int => M, N_int => N, O_int => O, P_int => P, Q_int => Q, R_int => R, S_int => S, T_int => T, U_int => U, V_int => V, W_int => W, X_int => X, Y_int => Y, Z_int => Z, Aout => B_out);
+    Assign_Comparator_Value(A_int => C, B_int => B, C_int => A, D_int => D, E_int => E, F_int => F, G_int => G, H_int => H, I_int => I, J_int => J, K_int => K, L_int => L, M_int => M, N_int => N, O_int => O, P_int => P, Q_int => Q, R_int => R, S_int => S, T_int => T, U_int => U, V_int => V, W_int => W, X_int => X, Y_int => Y, Z_int => Z, Aout => C_out);
+    Assign_Comparator_Value(A_int => D, B_int => B, C_int => C, D_int => A, E_int => E, F_int => F, G_int => G, H_int => H, I_int => I, J_int => J, K_int => K, L_int => L, M_int => M, N_int => N, O_int => O, P_int => P, Q_int => Q, R_int => R, S_int => S, T_int => T, U_int => U, V_int => V, W_int => W, X_int => X, Y_int => Y, Z_int => Z, Aout => D_out); 
+    Assign_Comparator_Value(A_int => E, B_int => B, C_int => C, D_int => D, E_int => A, F_int => F, G_int => G, H_int => H, I_int => I, J_int => J, K_int => K, L_int => L, M_int => M, N_int => N, O_int => O, P_int => P, Q_int => Q, R_int => R, S_int => S, T_int => T, U_int => U, V_int => V, W_int => W, X_int => X, Y_int => Y, Z_int => Z, Aout => E_out);
+    Assign_Comparator_Value(A_int => F, B_int => B, C_int => C, D_int => D, E_int => E, F_int => A, G_int => G, H_int => H, I_int => I, J_int => J, K_int => K, L_int => L, M_int => M, N_int => N, O_int => O, P_int => P, Q_int => Q, R_int => R, S_int => S, T_int => T, U_int => U, V_int => V, W_int => W, X_int => X, Y_int => Y, Z_int => Z, Aout => F_out); 
+    Assign_Comparator_Value(A_int => G, B_int => B, C_int => C, D_int => D, E_int => E, F_int => F, G_int => A, H_int => H, I_int => I, J_int => J, K_int => K, L_int => L, M_int => M, N_int => N, O_int => O, P_int => P, Q_int => Q, R_int => R, S_int => S, T_int => T, U_int => U, V_int => V, W_int => W, X_int => X, Y_int => Y, Z_int => Z, Aout => G_out);
+    Assign_Comparator_Value(A_int => H, B_int => B, C_int => C, D_int => D, E_int => E, F_int => F, G_int => G, H_int => A, I_int => I, J_int => J, K_int => K, L_int => L, M_int => M, N_int => N, O_int => O, P_int => P, Q_int => Q, R_int => R, S_int => S, T_int => T, U_int => U, V_int => V, W_int => W, X_int => X, Y_int => Y, Z_int => Z, Aout => H_out); 
+    Assign_Comparator_Value(A_int => I, B_int => B, C_int => C, D_int => D, E_int => E, F_int => F, G_int => G, H_int => H, I_int => A, J_int => J, K_int => K, L_int => L, M_int => M, N_int => N, O_int => O, P_int => P, Q_int => Q, R_int => R, S_int => S, T_int => T, U_int => U, V_int => V, W_int => W, X_int => X, Y_int => Y, Z_int => Z, Aout => I_out);
+    Assign_Comparator_Value(A_int => J, B_int => B, C_int => C, D_int => D, E_int => E, F_int => F, G_int => G, H_int => H, I_int => I, J_int => A, K_int => K, L_int => L, M_int => M, N_int => N, O_int => O, P_int => P, Q_int => Q, R_int => R, S_int => S, T_int => T, U_int => U, V_int => V, W_int => W, X_int => X, Y_int => Y, Z_int => Z, Aout => J_out); 
+    Assign_Comparator_Value(A_int => K, B_int => B, C_int => C, D_int => D, E_int => E, F_int => F, G_int => G, H_int => H, I_int => I, J_int => J, K_int => A, L_int => L, M_int => M, N_int => N, O_int => O, P_int => P, Q_int => Q, R_int => R, S_int => S, T_int => T, U_int => U, V_int => V, W_int => W, X_int => X, Y_int => Y, Z_int => Z, Aout => K_out);
+    Assign_Comparator_Value(A_int => L, B_int => B, C_int => C, D_int => D, E_int => E, F_int => F, G_int => G, H_int => H, I_int => I, J_int => J, K_int => K, L_int => A, M_int => M, N_int => N, O_int => O, P_int => P, Q_int => Q, R_int => R, S_int => S, T_int => T, U_int => U, V_int => V, W_int => W, X_int => X, Y_int => Y, Z_int => Z, Aout => L_out); 
+    Assign_Comparator_Value(A_int => M, B_int => B, C_int => C, D_int => D, E_int => E, F_int => F, G_int => G, H_int => H, I_int => I, J_int => J, K_int => K, L_int => L, M_int => A, N_int => N, O_int => O, P_int => P, Q_int => Q, R_int => R, S_int => S, T_int => T, U_int => U, V_int => V, W_int => W, X_int => X, Y_int => Y, Z_int => Z, Aout => M_out);
+    Assign_Comparator_Value(A_int => N, B_int => B, C_int => C, D_int => D, E_int => E, F_int => F, G_int => G, H_int => H, I_int => I, J_int => J, K_int => K, L_int => L, M_int => M, N_int => A, O_int => O, P_int => P, Q_int => Q, R_int => R, S_int => S, T_int => T, U_int => U, V_int => V, W_int => W, X_int => X, Y_int => Y, Z_int => Z, Aout => N_out); 
+    Assign_Comparator_Value(A_int => O, B_int => B, C_int => C, D_int => D, E_int => E, F_int => F, G_int => G, H_int => H, I_int => I, J_int => J, K_int => K, L_int => L, M_int => M, N_int => N, O_int => A, P_int => P, Q_int => Q, R_int => R, S_int => S, T_int => T, U_int => U, V_int => V, W_int => W, X_int => X, Y_int => Y, Z_int => Z, Aout => O_out);
+    Assign_Comparator_Value(A_int => P, B_int => B, C_int => C, D_int => D, E_int => E, F_int => F, G_int => G, H_int => H, I_int => I, J_int => J, K_int => K, L_int => L, M_int => M, N_int => N, O_int => O, P_int => A, Q_int => Q, R_int => R, S_int => S, T_int => T, U_int => U, V_int => V, W_int => W, X_int => X, Y_int => Y, Z_int => Z, Aout => P_out); 
+    Assign_Comparator_Value(A_int => Q, B_int => B, C_int => C, D_int => D, E_int => E, F_int => F, G_int => G, H_int => H, I_int => I, J_int => J, K_int => K, L_int => L, M_int => M, N_int => N, O_int => O, P_int => P, Q_int => A, R_int => R, S_int => S, T_int => T, U_int => U, V_int => V, W_int => W, X_int => X, Y_int => Y, Z_int => Z, Aout => Q_out);
+    Assign_Comparator_Value(A_int => R, B_int => B, C_int => C, D_int => D, E_int => E, F_int => F, G_int => G, H_int => H, I_int => I, J_int => J, K_int => K, L_int => L, M_int => M, N_int => N, O_int => O, P_int => P, Q_int => Q, R_int => A, S_int => S, T_int => T, U_int => U, V_int => V, W_int => W, X_int => X, Y_int => Y, Z_int => Z, Aout => R_out); 
+    Assign_Comparator_Value(A_int => S, B_int => B, C_int => C, D_int => D, E_int => E, F_int => F, G_int => G, H_int => H, I_int => I, J_int => J, K_int => K, L_int => L, M_int => M, N_int => N, O_int => O, P_int => P, Q_int => Q, R_int => R, S_int => A, T_int => T, U_int => U, V_int => V, W_int => W, X_int => X, Y_int => Y, Z_int => Z, Aout => S_out);
+    Assign_Comparator_Value(A_int => T, B_int => B, C_int => C, D_int => D, E_int => E, F_int => F, G_int => G, H_int => H, I_int => I, J_int => J, K_int => K, L_int => L, M_int => M, N_int => N, O_int => O, P_int => P, Q_int => Q, R_int => R, S_int => S, T_int => A, U_int => U, V_int => V, W_int => W, X_int => X, Y_int => Y, Z_int => Z, Aout => T_out); 
+    Assign_Comparator_Value(A_int => U, B_int => B, C_int => C, D_int => D, E_int => E, F_int => F, G_int => G, H_int => H, I_int => I, J_int => J, K_int => K, L_int => L, M_int => M, N_int => N, O_int => O, P_int => P, Q_int => Q, R_int => R, S_int => S, T_int => T, U_int => A, V_int => V, W_int => W, X_int => X, Y_int => Y, Z_int => Z, Aout => U_out);
+    Assign_Comparator_Value(A_int => V, B_int => B, C_int => C, D_int => D, E_int => E, F_int => F, G_int => G, H_int => H, I_int => I, J_int => J, K_int => K, L_int => L, M_int => M, N_int => N, O_int => O, P_int => P, Q_int => Q, R_int => R, S_int => S, T_int => T, U_int => U, V_int => A, W_int => W, X_int => X, Y_int => Y, Z_int => Z, Aout => V_out); 
+    Assign_Comparator_Value(A_int => W, B_int => B, C_int => C, D_int => D, E_int => E, F_int => F, G_int => G, H_int => H, I_int => I, J_int => J, K_int => K, L_int => L, M_int => M, N_int => N, O_int => O, P_int => P, Q_int => Q, R_int => R, S_int => S, T_int => T, U_int => U, V_int => V, W_int => A, X_int => X, Y_int => Y, Z_int => Z, Aout => W_out);
+    Assign_Comparator_Value(A_int => X, B_int => B, C_int => C, D_int => D, E_int => E, F_int => F, G_int => G, H_int => H, I_int => I, J_int => J, K_int => K, L_int => L, M_int => M, N_int => N, O_int => O, P_int => P, Q_int => Q, R_int => R, S_int => S, T_int => T, U_int => U, V_int => V, W_int => W, X_int => A, Y_int => Y, Z_int => Z, Aout => X_out); 
+    Assign_Comparator_Value(A_int => Y, B_int => B, C_int => C, D_int => D, E_int => E, F_int => F, G_int => G, H_int => H, I_int => I, J_int => J, K_int => K, L_int => L, M_int => M, N_int => N, O_int => O, P_int => P, Q_int => Q, R_int => R, S_int => S, T_int => T, U_int => U, V_int => V, W_int => W, X_int => X, Y_int => A, Z_int => Z, Aout => Y_out);
+    Assign_Comparator_Value(A_int => Z, B_int => B, C_int => C, D_int => D, E_int => E, F_int => F, G_int => G, H_int => H, I_int => I, J_int => J, K_int => K, L_int => L, M_int => M, N_int => N, O_int => O, P_int => P, Q_int => Q, R_int => R, S_int => S, T_int => T, U_int => U, V_int => V, W_int => W, X_int => X, Y_int => Y, Z_int => A, Aout => Z_out);                   
+end process;
+end Behavioral;
